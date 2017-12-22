@@ -46,7 +46,10 @@ Resume.Boss_4.prototype = {
 
     //  This stops it from falling away when you jump on it
     ground.body.immovable = true;
-    
+     //adding the treasure chest
+    treasure = this.add.sprite(670, 450, 'treasure');
+    treasure.scale.setTo(.15, .15);
+    this.physics.arcade.enable(treasure);
     // The player and its settings
     player = this.add.sprite(32, this.world.height - 150, 'dude');
     
@@ -94,6 +97,7 @@ Resume.Boss_4.prototype = {
     //  Collision events
     this.physics.arcade.collide(player, platforms);
     this.physics.arcade.collide(bullet, wasp_boss, this.reached_boss, null, this);
+    this.physics.arcade.collide(player, treasure, this.reached_treasure, null, this);
      // Reset the mummy's velocity (movement)
   
     //player controls
@@ -150,12 +154,10 @@ Resume.Boss_4.prototype = {
     }
   },
 
-  reached_boss: function(player, wasp_boss) {
-      // this.state.start('level_two'); 
+  reached_boss: function(player, wasp_boss) { 
     this.resetBullet(bullet);
     wasp_boss.kill();
-    // alert('reached');
-    this.state.start('Knowledge', true, false);
+    this.showtext();
   },
 
   resetBullet: function(bullet) {
@@ -172,10 +174,26 @@ Resume.Boss_4.prototype = {
 
       if (bullet) {
           //  And fire it
-        bullet.reset(player.x, player.y + 8);
+        bullet.reset(player.x + 30, player.y + 20);
         bullet.body.velocity.x = 300;
-        bulletTime = this.time.now + 200;
+        bulletTime = this.time.now + 700;
       }//ends if (bullet)
     }//ends if (this.,time.now > bulletTime)
-  }//ends fireBullet function
+  },//ends fireBullet function
+  showtext: function(){
+    text_background = this.add.sprite(170, 0, 'night_sky');
+    text_background.inputEnabled = true;
+    text_background.scale.setTo(.6, .6);
+  
+    var style = { font: "20px Arial", fill: "#ff0044", wordWrap: true, wordWrapWidth: text_background.width, align: "center", backgroundColor: "#ffff00" };
+
+    text = this.add.text(0, 0, "- Knowledge -\n here is information about my coding Knowledge ", style);
+    text.anchor.set(0.5);
+    text.x = Math.floor(text_background.x + text_background.width / 2);
+    text.y = Math.floor(text_background.y + text_background.height / 2);
+
+  },
+  reached_treasure: function(player, treasure){
+    this.state.start('LevelFive', true, false);
+  }
 };

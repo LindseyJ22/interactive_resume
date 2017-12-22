@@ -18,6 +18,7 @@ Resume.Preload.prototype = {
     this.load.image('bullet', 'assets/images/red_ball.png');
     this.load.spritesheet('dude', 'assets/images/dude.png', 32, 48);
     this.load.spritesheet('mummy', 'assets/images/mummy.png', 37, 45, 18);
+    this.load.image('treasure', 'assets/images/treasure.png');
     //level one assets
     this.load.image('sky', 'assets/images/sky.png');
     this.load.image('ground', 'assets/images/platform.png');
@@ -27,6 +28,7 @@ Resume.Preload.prototype = {
     this.load.image('cloud', 'assets/images/cloud.png');
     //level one boss assets
     this.load.image('wall', 'assets/images/wall.jpg');
+    this.load.image('spiked_boss', 'assets/images/spiked_boss.png');
     
     //level two assets
     this.load.image('night_sky', 'assets/images/space1.png');
@@ -51,6 +53,7 @@ Resume.Preload.prototype = {
     //level three boss assets
     this.load.image('wall_4', 'assets/images/wall_4.jpg');
     this.load.image('water', 'assets/images/water.png');
+    this.load.image('shark', 'assets/images/shark.png')
     //level four assets
     this.load.image('mountain', 'assets/images/mountain.png');
     this.load.image('mountain_ledge', 'assets/images/mountain_ledge.png');
@@ -64,11 +67,15 @@ Resume.Preload.prototype = {
     //level four boss assets
     this.load.image('level_4_wall', 'assets/images/wall_5.png');
     this.load.image('wasp', 'assets/images/wasp.png');
-    //leve five assests
+    //level five assests
     this.load.image('cloud_platform', 'assets/images/cloud_platform.png');
     this.load.image('cloud_city', 'assets/images/cloud_city.jpg');
     this.load.image('bomb', 'assets/images/bomb_2.png');
     this.load.image('cloud_castle', 'assets/images/cloud_castle_2.png');
+    //level five boss assets
+    this.load.image('cloud_boss', 'assets/images/cloud_boss.png');
+    //final scene assets
+    this.load.image('me', 'assets/images/me.png');
   },
   create: function() {
   	this.state.start('MainMenu');

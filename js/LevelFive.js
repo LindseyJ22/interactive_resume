@@ -148,7 +148,6 @@ Resume.LevelFive.prototype = {
   },
 
   reached_castle: function(player, castle) {
-      // this.state.start('level_two'); 
     castle.kill();
     this.state.start('Boss_5', true, false);
     music.stop();

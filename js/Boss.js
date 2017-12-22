@@ -10,10 +10,10 @@ Resume.Boss = function(){};
   var resetBullet;
   var bulletTime = 0;
   var firingTimer = 0;
+  var ball;
 Resume.Boss.prototype = {
   create: function() {
     this.physics.startSystem(Phaser.Physics.ARCADE);
-
     //  A simple castle wall background for our game
     wall = this.add.sprite(0, 0, 'wall');
     wall.scale.setTo(1.56, 1.56);
@@ -43,6 +43,16 @@ Resume.Boss.prototype = {
     //  This stops it from falling away when you jump on it
     ground.body.immovable = true;
     
+    ball = this.add.sprite(400, 0, 'spiked_boss');
+    this.physics.arcade.enable(ball);
+    ball.scale.setTo(.7, .7);
+    ball.body.collideWorldBounds = true;
+    ball.body.bounce.set(1);
+    ball.body.gravity.y = 200;
+    //add the treasure chest
+    treasure = this.add.sprite(670, 450, 'treasure');
+    treasure.scale.setTo(.15, .15);
+    this.physics.arcade.enable(treasure);
     // The player and its settings
     player = this.add.sprite(32, this.world.height - 150, 'dude');
     
@@ -59,21 +69,6 @@ Resume.Boss.prototype = {
     player.animations.add('right', [5, 6, 7, 8], 10, true);
 
     //  Our controls.
-    mummy = this.add.sprite(700, 490, 'mummy');
-    mummy.enableBody = true;
-    // mummy.collideWorldBounds = true;
-    this.physics.arcade.enable(mummy);
-    //I need to flip the sprite in a different horizontal direction
-
-    mummy.scale.x *= -1;
-  //  Here we add a new animation called 'walk'
-  //  Because we didn't give any other parameters it's going to make an animation from all available frames in the 'mummy' sprite sheet
-    walk = mummy.animations.add('walk');
-
-  //  And this starts the animation playing by using its key ("walk")
-  //  30 is the frame rate (30fps)
-  //  true means it will loop when it finishes
-    mummy.animations.play('walk', 30, true);
 
     cursors = this.input.keyboard.createCursorKeys();
     fireButton = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -82,18 +77,14 @@ Resume.Boss.prototype = {
   update: function() {
     //  Collide the player with the platforms
     this.physics.arcade.collide(player, platforms);
-    this.physics.arcade.collide(bullet, mummy, this.reached_boss, null, this);
+    this.physics.arcade.collide(ball, platforms);
+    this.physics.arcade.collide(bullet, ball, this.reached_boss, null, this);
+    this.physics.arcade.collide(player, treasure, this.reached_treasure, null, this);
 
     // this.physics.arcade.collide(mummy, platforms);
     // this.physics.arcade.overlap(player, castle, this.reached_castle, null, this);
 
      // Reset the players velocity (movement)
-     mummy.x -= .004;
-
-    if (mummy.x < -mummy.width) {
-      mummy.x = this.world.width;
-    }
-
 
       player.body.velocity.x = 0;
 
@@ -123,12 +114,12 @@ Resume.Boss.prototype = {
       }
   },
 
-  reached_boss: function(player, mummy) {
+  reached_boss: function(player, ball) {
     // this.state.start('level_two'); 
     this.resetBullet(bullet);
-    mummy.kill();
-    alert('reached');
-    this.state.start('AboutMe', true, false);
+    ball.kill();
+    this.showtext();
+    // this.state.start('AboutMe', true, false);
   },
 
   resetBullet: function(bullet) {
@@ -145,10 +136,26 @@ Resume.Boss.prototype = {
 
       if (bullet) {
           //  And fire it
-          bullet.reset(player.x, player.y + 8);
+          bullet.reset(player.x + 30, player.y + 20);
           bullet.body.velocity.x = 300;
-          bulletTime = this.time.now + 200;
+          bulletTime = this.time.now + 700;
       }
     }
+  },
+  showtext: function(){
+    text_background = this.add.sprite(200, 0, 'night_sky');
+    text_background.inputEnabled = true;
+    text_background.scale.setTo(.6, .6);
+  
+    var style = { font: "20px Arial", fill: "#ff0044", wordWrap: true, wordWrapWidth: text_background.width, align: "center", backgroundColor: "#ffff00" };
+
+    text = this.add.text(0, 0, "- About Me -\n here are some facts about me ", style);
+    text.anchor.set(0.5);
+    text.x = Math.floor(text_background.x + text_background.width / 2);
+    text.y = Math.floor(text_background.y + text_background.height / 2);
+
+  },
+  reached_treasure: function(player, treasure){
+    this.state.start('LevelTwo', true, false);
   }
 };

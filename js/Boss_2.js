@@ -36,6 +36,10 @@ Resume.Boss_2.prototype = {
     ground.scale.setTo(2, 2);
     //  This stops it from falling away when you jump on it
     ground.body.immovable = true;
+    //add treasure
+    treasure = this.add.sprite(670, 450, 'treasure');
+    treasure.scale.setTo(.15, .15);
+    this.physics.arcade.enable(treasure);
     // The player and its settings
     player = this.add.sprite(32, this.world.height - 150, 'dude');
     // //  We need to enable physics on the player
@@ -48,11 +52,12 @@ Resume.Boss_2.prototype = {
     player.animations.add('left', [0, 1, 2, 3], 10, true);
     player.animations.add('right', [5, 6, 7, 8], 10, true);
     //  add the boss
-    mummy = this.add.sprite(700, 490, 'mummy');
+    mummy = this.add.sprite(660, 455, 'mummy');
     mummy.enableBody = true;
     // mummy.collideWorldBounds = true;
     this.physics.arcade.enable(mummy);
     //I need to flip the sprite in a different horizontal direction
+    mummy.scale.setTo(1.8, 1.8);
     mummy.scale.x *= -1;
     //  Here we add a new animation called 'walk'
     //  Because we didn't give any other parameters it's going to make an animation from all available frames in the 'mummy' sprite sheet
@@ -70,6 +75,7 @@ Resume.Boss_2.prototype = {
     //  Collision events
     this.physics.arcade.collide(player, platforms);
     this.physics.arcade.collide(bullet, mummy, this.reached_boss, null, this);
+    this.physics.arcade.collide(player, treasure, this.reached_treasure, null, this);
      // Reset the boss' velocity (movement)
     mummy.x -= .004;
     if (mummy.x < mummy.width) {
@@ -109,7 +115,7 @@ Resume.Boss_2.prototype = {
     this.resetBullet(bullet);
     mummy.kill();
     // alert('reached');
-    this.state.start('WorkExperience', true, false);
+    this.showtext();
   },
 
   resetBullet: function(bullet) {
@@ -125,10 +131,26 @@ Resume.Boss_2.prototype = {
       bullet = bullets.getFirstExists(false);
       if (bullet) {
           //  And fire it
-        bullet.reset(player.x, player.y + 8);
+        bullet.reset(player.x + 30, player.y + 20);
         bullet.body.velocity.x = 300;
-        bulletTime = this.time.now + 200;
+        bulletTime = this.time.now + 700;
       }//ends if (bullet)
     }//ends if (this.,time.now > bulletTime)
-  }//ends fireBullet function
+  },//ends fireBullet function
+  showtext: function(){
+    text_background = this.add.sprite(170, 0, 'night_sky');
+    text_background.inputEnabled = true;
+    text_background.scale.setTo(.6, .6);
+  
+    var style = { font: "20px Arial", fill: "#ff0044", wordWrap: true, wordWrapWidth: text_background.width, align: "center", backgroundColor: "#ffff00" };
+
+    text = this.add.text(0, 0, "- Work Experience -\n here is my work experience ", style);
+    text.anchor.set(0.5);
+    text.x = Math.floor(text_background.x + text_background.width / 2);
+    text.y = Math.floor(text_background.y + text_background.height / 2);
+
+  },
+  reached_treasure: function(player, treasure){
+    this.state.start('LevelThree', true, false);
+  }
 };

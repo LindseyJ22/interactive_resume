@@ -63,7 +63,18 @@ Resume.Boss_5.prototype = {
     ledge = platforms.create(660, 550, 'cloud_platform');
     ledge.body.immovable = true;
 
-    
+    cloud_boss = this.add.sprite(400, 0, 'cloud_boss');
+    this.physics.arcade.enable(cloud_boss);
+    cloud_boss.scale.setTo(.1, .1);
+    cloud_boss.body.collideWorldBounds = true;
+    cloud_boss.body.bounce.set(1);
+    cloud_boss.body.gravity.x = 200;
+    cloud_boss.body.gravity.y = 200;
+
+     //adding the treasure chest
+    treasure = this.add.sprite(670, 450, 'treasure');
+    treasure.scale.setTo(.15, .15);
+    this.physics.arcade.enable(treasure);
     // The player and its settings
     player = this.add.sprite(32, this.world.height - 150, 'dude');
     
@@ -79,20 +90,6 @@ Resume.Boss_5.prototype = {
     player.animations.add('left', [0, 1, 2, 3], 10, true);
     player.animations.add('right', [5, 6, 7, 8], 10, true);
 
-    //Boss controls
-    mummy = this.add.sprite(700, 510, 'mummy');
-    mummy.enableBody = true;
-    this.physics.arcade.enable(mummy);
-    //I need to flip the sprite in a different horizontal direction
-    mummy.scale.x *= -1;
-    //  Here we add a new animation called 'walk'
-    //  Because we didn't give any other parameters it's going to make an animation from all available frames in the 'mummy' sprite sheet
-    walk = mummy.animations.add('walk');
-    //  And this starts the animation playing by using its key ("walk")
-    //  30 is the frame rate (30fps)
-    //  true means it will loop when it finishes
-    mummy.animations.play('walk', 30, true);
-
     cursors = this.input.keyboard.createCursorKeys();
     fireButton = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
@@ -100,13 +97,8 @@ Resume.Boss_5.prototype = {
   update: function() {
     //  Collision events
     this.physics.arcade.collide(player, platforms);
-    this.physics.arcade.collide(bullet, mummy, this.reached_boss, null, this);
-     // Reset the mummy's velocity (movement)
-    mummy.x -= .004;
-
-    if (mummy.x < mummy.width) {
-      mummy.x = this.world.width;
-    }
+    this.physics.arcade.collide(bullet, cloud_boss, this.reached_boss, null, this);
+    this.physics.arcade.collide(player, treasure, this.reached_treasure, null, this);
     //player controls
     player.body.velocity.x = 0;
 
@@ -136,15 +128,9 @@ Resume.Boss_5.prototype = {
     }
   },
 
-  reached_boss: function(player, mummy) {
-      // this.state.start('level_two'); 
-    this.resetBullet(bullet);
-    mummy.kill();
-    // alert('reached');
-    this.state.start('Goals', true, false);
-  },
-
-  resetBullet: function(bullet) {
+  reached_boss: function(player, cloud_boss) {
+    cloud_boss.kill();
+    this.showtext();
     //destroy the bullet
     bullet.kill();
   },//ends resetBullet function
@@ -158,10 +144,26 @@ Resume.Boss_5.prototype = {
 
       if (bullet) {
           //  And fire it
-        bullet.reset(player.x, player.y + 8);
+        bullet.reset(player.x + 30, player.y + 20);
         bullet.body.velocity.x = 300;
-        bulletTime = this.time.now + 200;
+        bulletTime = this.time.now + 700;
       }//ends if (bullet)
     }//ends if (this.,time.now > bulletTime)
-  }//ends fireBullet function
+  },//ends fireBullet function
+   showtext: function(){
+    text_background = this.add.sprite(170, 0, 'night_sky');
+    text_background.inputEnabled = true;
+    text_background.scale.setTo(.6, .6);
+  
+    var style = { font: "20px Arial", fill: "#ff0044", wordWrap: true, wordWrapWidth: text_background.width, align: "center", backgroundColor: "#ffff00" };
+
+    text = this.add.text(0, 0, "- Goals -\n here is information about goals and work preferences ", style);
+    text.anchor.set(0.5);
+    text.x = Math.floor(text_background.x + text_background.width / 2);
+    text.y = Math.floor(text_background.y + text_background.height / 2);
+
+  },
+  reached_treasure: function(player, treasure){
+    this.state.start('FinalScene', true, false);
+  }
 };

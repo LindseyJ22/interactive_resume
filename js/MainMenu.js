@@ -21,7 +21,7 @@ Resume.MainMenu.prototype = {
   },
   update: function() {
     if(this.game.input.activePointer.justPressed()) {
-      this.game.state.start('FinalScene');
+      this.game.state.start('Game');
     }
   }
 };

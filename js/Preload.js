@@ -20,6 +20,7 @@ Resume.Preload.prototype = {
     this.load.spritesheet('mummy', 'assets/images/mummy.png', 37, 45, 18);
     this.load.image('treasure', 'assets/images/treasure.png');
     //level one assets
+    this.load.image('grass_platform', 'assets/images/grass_platform.png');
     this.load.image('sky', 'assets/images/sky.png');
     this.load.image('ground', 'assets/images/platform.png');
     this.load.image('castle', 'assets/images/castle_1.png');

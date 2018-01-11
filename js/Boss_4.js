@@ -187,7 +187,7 @@ Resume.Boss_4.prototype = {
   
     var style = { font: "20px Arial", fill: "#ff0044", wordWrap: true, wordWrapWidth: text_background.width, align: "center", backgroundColor: "#ffff00" };
 
-    text = this.add.text(0, 0, "- Knowledge -\n here is information about my coding Knowledge ", style);
+    text = this.add.text(0, 0, "- Coding Knowledge -\n\n -Ruby on rails \n -HTML5\n -CSS\n-Javascript\n-React\n-Phaser", style);
     text.anchor.set(0.5);
     text.x = Math.floor(text_background.x + text_background.width / 2);
     text.y = Math.floor(text_background.y + text_background.height / 2);

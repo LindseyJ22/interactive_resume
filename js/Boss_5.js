@@ -157,7 +157,7 @@ Resume.Boss_5.prototype = {
   
     var style = { font: "20px Arial", fill: "#ff0044", wordWrap: true, wordWrapWidth: text_background.width, align: "center", backgroundColor: "#ffff00" };
 
-    text = this.add.text(0, 0, "- Goals -\n here is information about goals and work preferences ", style);
+    text = this.add.text(0, 0, "- Goals -\n I would like to work for a company where I can continue to progress both in education and posistion. \nI want a job that challanges me and where I can be proud of my work at the end of the day. ", style);
     text.anchor.set(0.5);
     text.x = Math.floor(text_background.x + text_background.width / 2);
     text.y = Math.floor(text_background.y + text_background.height / 2);

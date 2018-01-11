@@ -144,7 +144,7 @@ Resume.Boss_2.prototype = {
   
     var style = { font: "20px Arial", fill: "#ff0044", wordWrap: true, wordWrapWidth: text_background.width, align: "center", backgroundColor: "#ffff00" };
 
-    text = this.add.text(0, 0, "- Work Experience -\n here is my work experience ", style);
+    text = this.add.text(0, 0, "- Work Experience -\n Night shift lead/supervisor at Red Wing Shoe Co.\nJun 2006 – Aug 2016\n-delegated work tasks for a shift of 15-20 people\n- machine safety checking\n- managed and stored 10's of thousands of units of inventory\n- successfully kept moral high and promoted healthy relationships amongst employees\n- successfully managed multiple teams\n- created new and innovative systems to keep track of inventory\n- quick to learn all new technology that was introduced ", style);
     text.anchor.set(0.5);
     text.x = Math.floor(text_background.x + text_background.width / 2);
     text.y = Math.floor(text_background.y + text_background.height / 2);

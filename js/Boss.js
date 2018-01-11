@@ -149,7 +149,7 @@ Resume.Boss.prototype = {
   
     var style = { font: "20px Arial", fill: "#ff0044", wordWrap: true, wordWrapWidth: text_background.width, align: "center", backgroundColor: "#ffff00" };
 
-    text = this.add.text(0, 0, "- About Me -\n here are some facts about me ", style);
+    text = this.add.text(0, 0, "- About Me -\n Committed and motivated web developer with exceptional team working and leadership skills. Proficient at learning new skills with a passion for arts and entertainment.  ", style);
     text.anchor.set(0.5);
     text.x = Math.floor(text_background.x + text_background.width / 2);
     text.y = Math.floor(text_background.y + text_background.height / 2);

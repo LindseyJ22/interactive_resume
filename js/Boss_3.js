@@ -152,7 +152,7 @@ Resume.Boss_3.prototype = {
   
     var style = { font: "20px Arial", fill: "#ff0044", wordWrap: true, wordWrapWidth: text_background.width, align: "center", backgroundColor: "#ffff00" };
 
-    text = this.add.text(0, 0, "- Education -\n here is information on my education ", style);
+    text = this.add.text(0, 0, "- Education -\n\n New York Code and Design Acadamy\n Certified in full stack web development\n2017-2018\n\nUniversity of Utah \n Entertainment arts and engineering\n 2012-2014\n\n Salt Lake Community College \n General Education \n 2010-2012 ", style);
     text.anchor.set(0.5);
     text.x = Math.floor(text_background.x + text_background.width / 2);
     text.y = Math.floor(text_background.y + text_background.height / 2);
